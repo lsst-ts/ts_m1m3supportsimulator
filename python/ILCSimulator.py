@@ -4,6 +4,10 @@ import struct
 '''
 This class simulates responses from the ILC.  Returns a byte array for each
 response possible.
+This will return different data then the actually ILC response.   There will 
+be no CRC at the end of the byte array and a byte count of all bytes after 
+the function will occur after the function code.
+
 AWC 29 August 2017
 '''
 class ILCSimulator:
@@ -57,6 +61,7 @@ class ILCSimulator:
         # networkNodeType (1 byte), ilcSelectedOptions (1 byte),
         # networkNodeOptions (1 byte), majorRev (1 byte), minorRev (1 byte)
         byteCount = 12 + len(firmwareNameBytes)
+        self.dataCheck(byteCount + 1, 'Respone Byte Count', response)
         self.dataCheck(byteCount, 'Byte Count', response)
 
         self.dataCheck(uniqueId, 'Unique Id', response, 6)
@@ -68,7 +73,7 @@ class ILCSimulator:
         self.dataCheck(minorRev, 'Minor Revision', response)
         response.extend(firmwareNameBytes)
         
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -78,11 +83,12 @@ class ILCSimulator:
 
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(18, 'Function Code', response)
+        self.dataCheck(5, 'Respone Byte Count', response)
         self.dataCheck(mode, 'Mode', response)
         self.dataCheck(status, 'Status', response, 2)
         self.dataCheck(faults, 'Faults', response, 2)
         
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -91,9 +97,10 @@ class ILCSimulator:
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(65, 'Function Code', response)
+        self.dataCheck(2, 'Respone Byte Count', response)
         self.dataCheck(ilcMode, 'ILCMode', response, 2)
 
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -102,11 +109,12 @@ class ILCSimulator:
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(66, 'Function Code', response)
+        self.dataCheck(9, 'Respone Byte Count', response)
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(ssiEncoderValue, 'SSI Encoder Value', response, 4)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
 
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -115,11 +123,12 @@ class ILCSimulator:
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(67, 'Function Code', response)
+        self.dataCheck(9, 'Respone Byte Count', response)
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(ssiEncoderValue, 'SSI Encoder Value', response, 4)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
 
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -128,9 +137,10 @@ class ILCSimulator:
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(72, 'Function Code', response)
+        self.dataCheck(1, 'Respone Byte Count', response)
         self.dataCheck(temporaryAddress, 'Temporary Address', response)
 
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -139,9 +149,10 @@ class ILCSimulator:
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(80, 'Function Code', response)
+        self.dataCheck(2, 'Respone Byte Count', response)
         self.dataCheck(scanRateCode, 'Scan Rate Code', response, 2)
 
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -156,6 +167,7 @@ class ILCSimulator:
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(110, 'Function Code', response)
+        self.dataCheck(24, 'Respone Byte Count', response)
         self.dataCheck(mainAdcCalibration1, 'Main ADC Calibration1', response, 4)
         self.dataCheck(mainAdcCalibration2, 'Main ADC Calibration2', response, 4)
         self.dataCheck(mainAdcCalibration3, 'Main ADC Calibration3', response, 4)
@@ -181,7 +193,7 @@ class ILCSimulator:
         self.dataCheck(backupSensorSensitivity3, 'Backup Sensor Sensitivity3', response, 4)
         self.dataCheck(backupSensorSensitivity4, 'Backup Sensor Sensitivity4', response, 4)
 
-        self.calculateCRC(response)
+#        self.calculateCRC(response)
         return response
 
     ##########################################################################################################
@@ -196,7 +208,6 @@ class ILCSimulator:
                     crc = crcShift ^ int('A001', 16)
                 else:
                     crc = crcShift
-        print("CRC: " + str(crc))
         aByteArray.extend(crc.to_bytes(2, byteorder='big'))
         return crc
     
@@ -252,8 +263,8 @@ def main():
                                         678.91, 0, 0, 0, 789.21, 891.23, 912.34, -123.45,
                                         -234.56, 0, 0, 0, -345.67, 0, 0, 0)
     assert(bytes([1, 110, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 228, 144]) == response)
-    print(list(response))
+    print("Read Calibration Data (110): " + str(binascii.hexlify(response)))
 
     print("Succesfully end testing.")
 ##########################################################################################################
-main()
+#main()

@@ -22,9 +22,9 @@ class UDP:
         
         try :
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            print 'Socket created'
-        except socket.error, msg :
-            print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+            print('Socket created')
+        except socket.error as msg :
+            print ('Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
             sys.exit()
     
     def send(self, message):
@@ -32,13 +32,16 @@ class UDP:
         except NameError: message = 'Hello World.'
 
         server_address = (self.UDP_IP, self.UDP_PORT)
-        self.sock.sendto(message.encode(), server_address) # need encode in Python 3
+        if (isinstance(message, bytearray)):
+            self.sock.sendto(message, server_address) # need encode in Python 3
+        else:
+            self.sock.sendto(message.encode(), server_address) # need encode in Python 3
 
     def receive(self):
         try:
             self.sock.bind((self.UDP_IP, self.UDP_PORT))
-        except socket.error , msg:
-            print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+        except socket.error as msg:
+            print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
             sys.exit()
             
         while True:
@@ -62,6 +65,6 @@ def main():
     if (sys.argv[1] == "-client"):
         udpInstance.send(sys.argv[2])
     
-main()
+#main()
     
     
