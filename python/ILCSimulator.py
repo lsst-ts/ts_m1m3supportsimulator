@@ -144,6 +144,74 @@ class ILCSimulator:
         return response
 
     ##########################################################################################################
+    # Code 73(0x49) Set Boost Valve DCA Gains
+    def setBoostValueDcaGains(self, serverAddr):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(73, 'Function Code', response)
+        return response
+
+    ##########################################################################################################
+    # Code 74(0x4A) Read Boost Valve DCA Gains
+    def readBoostValueDcaGains(self, serverAddr, axialBoostValveGain, lateralBoostValveGain):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(74, 'Function Code', response)
+        self.dataCheck(axialBoostValveGain, 'Axial Boost Valve Gain', response, 4)
+        self.dataCheck(lateralBoostValveGain, 'Lateral Boost Valve Gain', response, 4)
+        return response
+
+    ##########################################################################################################
+    # Code 75(0x4B) Pneumatic Axis Force Demand Command (Single)
+    def singlePneumaticAxisForce(self, statusByte, serverAddr, loadCellForce):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(75, 'Function Code', response)
+        self.dataCheck(statusByte, 'Status Byte', response)
+        self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
+
+#        self.calculateCRC(response)
+        return response
+
+    ##########################################################################################################
+    # Code 75(0x4B) Pneumatic Axis Force Demand Command (Dual)
+    def dualPneumaticAxisForce(self, serverAddr, statusByte, axialLoadCellForce, lateralLoadCellForce):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(75, 'Function Code', response)
+        self.dataCheck(statusByte, 'Status Byte', response)
+        self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
+        self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
+
+#        self.calculateCRC(response)
+        return response
+
+    ##########################################################################################################
+    # Code 76(0x4C) Pneumatic Force and Status (Single)
+    def singlePneumaticForceAndStatus(self, statusByte, serverAddr, loadCellForce):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(76, 'Function Code', response)
+        self.dataCheck(statusByte, 'Status Byte', response)
+        self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
+
+#        self.calculateCRC(response)
+        return response
+
+    ##########################################################################################################
+    # Code 76(0x4C) Pneumatic Force and Status (Dual)
+    def dualPneumaticForceAndStatus(self, serverAddr, statusByte, axialLoadCellForce, lateralLoadCellForce):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(76, 'Function Code', response)
+        self.dataCheck(statusByte, 'Status Byte', response)
+        self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
+        self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
+
+#        self.calculateCRC(response)
+        return response
+
+    ##########################################################################################################
     # Code 80(0x50) Set ADC Sample Rate
     def setAdcSampleRate(self, serverAddr, scanRateCode):
         response = bytearray()
@@ -153,6 +221,36 @@ class ILCSimulator:
         self.dataCheck(scanRateCode, 'Scan Rate Code', response, 2)
 
 #        self.calculateCRC(response)
+        return response
+
+    ##########################################################################################################
+    # Code 81(0x51) Set ADC Channel Offset and Sensitivity
+    def setAdcChannelOffsetAndSensitivity(self, serverAddr):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(81, 'Function Code', response)
+        return response
+
+    ##########################################################################################################
+    # Code 82(0x52) Read DAC Values
+    def readDacValues(self, serverAddr, dac1ValueAxialPush, dac2ValueAxialPush,
+                      dac3ValueLateralPush, dac4ValueLateralPush):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(82, 'Function Code', response)
+        self.dataCheck(dac1ValueAxialPush, 'DAC 1 Axial Push', response, 2)
+        self.dataCheck(dac2ValueAxialPush, 'DAC 2 Axial Push', response, 2)
+        self.dataCheck(dac3ValueLateralPush, 'DAC 3 Lateral Push', response, 2)
+        self.dataCheck(dac4ValueLateralPush, 'DAC 4 Lateral Push', response, 2)
+
+        return response
+
+    ##########################################################################################################
+    # Code 107(0x6B) Reset
+    def reset(self, serverAddr):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(107, 'Function Code', response)
         return response
 
     ##########################################################################################################
@@ -194,6 +292,43 @@ class ILCSimulator:
         self.dataCheck(backupSensorSensitivity4, 'Backup Sensor Sensitivity4', response, 4)
 
 #        self.calculateCRC(response)
+        return response
+
+    ##########################################################################################################
+    # Code 119(0x77) Read DCA Pressure Values
+    def readDcaPressureValues(self, serverAddr,
+                            pressure1AxialPush, pressure2AxialPull, pressure3LateralPull, pressure4LateralPush):
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(119, 'Function Code', response)
+        self.dataCheck(pressure1AxialPush, 'Pressure 1 Axial Push', response, 4)
+        self.dataCheck(pressure2AxialPull, 'Pressure 2 Axial Pull', response, 4)
+        self.dataCheck(pressure3LateralPull, 'Pressure 3 Lateral Pull', response, 4)
+        self.dataCheck(pressure4LateralPush, 'Pressure 4 Lateral Push', response, 4)
+        return response
+
+    ##########################################################################################################
+    # Code 120(0x78) Report DCA Id
+    def reportDcaId(self, serverAddr, dcaUniqueId, firmwareType, firmwareVersion):
+
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(120, 'Function Code', response)
+        self.dataCheck(dcaUniqueId, 'DCA Unique ID', response, 6)
+        self.dataCheck(firmwareType, 'Firmware Type', response)
+        self.dataCheck(firmwareVersion, 'Firmware Version', response, 2)
+
+        return response
+
+    ##########################################################################################################
+    # Code 121(0x79) Report DCA Status
+    def reportDcaStatus(self, serverAddr, dcaStatus):
+
+        response = bytearray()
+        self.dataCheck(serverAddr, 'Server Address', response)
+        self.dataCheck(121, 'Function Code', response)
+        self.dataCheck(dcaStatus, 'DCA Status', response, 2)
+
         return response
 
     ##########################################################################################################

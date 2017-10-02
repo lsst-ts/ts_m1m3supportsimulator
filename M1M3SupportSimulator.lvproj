@@ -102,9 +102,13 @@ AddOutputFilter chunkFilter
 		<Property Name="target.webservices.SecurityAPIKey" Type="Str">PqVr/ifkAQh+lVrdPIykXlFvg12GhhQFR8H9cUhphgg=:pTe9HRlQuMfJxAG6QCGq7UvoUpJzAzWGKy5SbZ+roSU=</Property>
 		<Property Name="target.webservices.ValidTimestampWindow" Type="Int">15</Property>
 		<Item Name="UDPCommunication" Type="Folder">
-			<Item Name="UDP Client.vi" Type="VI" URL="../UDPCommunication/UDP Client.vi"/>
-			<Item Name="UDP Server.vi" Type="VI" URL="../UDPCommunication/UDP Server.vi"/>
 			<Item Name="GenerateILCResponseEvent.vi" Type="VI" URL="../UDPCommunication/GenerateILCResponseEvent.vi"/>
+			<Item Name="UDP Client.vi" Type="VI" URL="../UDPCommunication/UDP Client.vi"/>
+			<Item Name="UDP Server Subnet A.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet A.vi"/>
+			<Item Name="UDP Server Subnet B.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet B.vi"/>
+			<Item Name="UDP Server Subnet C.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet C.vi"/>
+			<Item Name="UDP Server Subnet D.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet D.vi"/>
+			<Item Name="UDP Server Subnet E.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet E.vi"/>
 		</Item>
 		<Item Name="TypeDefs" Type="Folder">
 			<Item Name="ILCResponse.ctl" Type="VI" URL="../TypeDefs/ILCResponse.ctl"/>
@@ -3491,7 +3495,7 @@ AddOutputFilter chunkFilter
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{4BCF8E27-93AB-464E-98C4-FBED0C403A14}</Property>
 				<Property Name="Bld_targetDestDir" Type="Path">/home/lvuser/natinst/bin</Property>
-				<Property Name="Bld_version.build" Type="Int">2</Property>
+				<Property Name="Bld_version.build" Type="Int">4</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">m1m3SupSim.rtexe</Property>
 				<Property Name="Destination[0].path" Type="Path">/home/lvuser/natinst/bin/m1m3SupSim.rtexe</Property>
