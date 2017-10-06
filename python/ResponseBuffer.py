@@ -1,15 +1,19 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 
 import ILCSimulator
+import InclinometerSimulator
 import UDP
 import time
 
 def main():
     ilcSim = ILCSimulator.ILCSimulator()
+    inclinSim = InclinometerSimulator.InclinometerSimulator()
+    
     udpClientSubnetA = UDP.UDP('140.252.24.124', 5006)
     udpClientSubnetB = UDP.UDP('140.252.24.124', 5007)
     udpClientSubnetC = UDP.UDP('140.252.24.124', 5008)
     udpClientSubnetD = UDP.UDP('140.252.24.124', 5009)
     udpClientSubnetE = UDP.UDP('140.252.24.124', 5005)
+    udpClientInclin = UDP.UDP('140.252.24.124', 5010)
 
 #    response = ilcSim.reportServerId(1, 'ABCDEF', 1, 4, 1, 2, 1, 0, 'Firmware Name')
 #    udpClient.send(response)
@@ -30,58 +34,70 @@ def main():
 
 
             singleResponse = ilcSim.singlePneumaticAxisForce(1, 0, i + i * inc + 1)
-            dualResposne = ilcSim.dualPneumaticAxisForce(1, 0, i + ((i * inc) ** 2), (i + 1) ** 2 + inc) 
+            dualResponse = ilcSim.dualPneumaticAxisForce(1, 0, i + ((i * inc) ** 2), (i + 1) ** 2 + inc) 
             udpClientSubnetA.send(singleResponse)
             udpClientSubnetB.send(dualResponse)
             udpClientSubnetC.send(singleResponse)
             udpClientSubnetD.send(dualResponse)
             response = ilcSim.forceAndStatusRequest(1, 0, i*1, i*inc+1)
             udpClientSubnetE.send(response)
+            inclinResponse = inclinSim.inclinometerResponse(30.001 + i ** 2)
+            udpClientInclin.send(inclinResponse)
 
             singleResponse = ilcSim.singlePneumaticAxisForce(2, 0, i + i * inc + 2)
-            dualResposne = ilcSim.dualPneumaticAxisForce(2, 0, 2 + i + ((i * inc) ** 2), (i + 2) ** 2 + inc) 
+            dualResponse = ilcSim.dualPneumaticAxisForce(2, 0, 2 + i + ((i * inc) ** 2), (i + 2) ** 2 + inc) 
             udpClientSubnetA.send(singleResponse)
             udpClientSubnetB.send(dualResponse)
             udpClientSubnetC.send(singleResponse)
             udpClientSubnetD.send(dualResponse)
             response = ilcSim.forceAndStatusRequest(2, 0, i*2, i*inc+2)
             udpClientSubnetE.send(response)
+            inclinResponse = inclinSim.inclinometerResponse(30.001 + i ** 2)
+            udpClientInclin.send(inclinResponse)
 
             singleResponse = ilcSim.singlePneumaticAxisForce(3, 0, i + i * inc + 3)
-            dualResposne = ilcSim.dualPneumaticAxisForce(3, 0, 3 + i + ((i * inc) ** 2), (i + 3) ** 2 + inc) 
+            dualResponse = ilcSim.dualPneumaticAxisForce(3, 0, 3 + i + ((i * inc) ** 2), (i + 3) ** 2 + inc) 
             udpClientSubnetA.send(singleResponse)
             udpClientSubnetB.send(dualResponse)
             udpClientSubnetC.send(singleResponse)
             udpClientSubnetD.send(dualResponse)
             response = ilcSim.forceAndStatusRequest(3, 0, i*3, i*inc+3)
             udpClientSubnetE.send(response)
+            inclinResponse = inclinSim.inclinometerResponse(30.001 + i ** 2)
+            udpClientInclin.send(inclinResponse)
 
             singleResponse = ilcSim.singlePneumaticAxisForce(4, 0, i + i * inc + 4)
-            dualResposne = ilcSim.dualPneumaticAxisForce(4, 0, 4 + i + ((i * inc) ** 2), (i + 4) ** 2 + inc) 
+            dualResponse = ilcSim.dualPneumaticAxisForce(4, 0, 4 + i + ((i * inc) ** 2), (i + 4) ** 2 + inc) 
             udpClientSubnetA.send(singleResponse)
             udpClientSubnetB.send(dualResponse)
             udpClientSubnetC.send(singleResponse)
             udpClientSubnetD.send(dualResponse)
             response = ilcSim.forceAndStatusRequest(4, 0, i*4, i*inc+4)
             udpClientSubnetE.send(response)
+            inclinResponse = inclinSim.inclinometerResponse(30.001 + i ** 2)
+            udpClientInclin.send(inclinResponse)
 
             singleResponse = ilcSim.singlePneumaticAxisForce(5, 0, i + i * inc + 5)
-            dualResposne = ilcSim.dualPneumaticAxisForce(5, 0, 5 + i + ((i * inc) ** 2), (i + 5) ** 2 + inc) 
+            dualResponse = ilcSim.dualPneumaticAxisForce(5, 0, 5 + i + ((i * inc) ** 2), (i + 5) ** 2 + inc) 
             udpClientSubnetA.send(singleResponse)
             udpClientSubnetB.send(dualResponse)
             udpClientSubnetC.send(singleResponse)
             udpClientSubnetD.send(dualResponse)
             response = ilcSim.forceAndStatusRequest(5, 0, i*5, i*inc+5)
             udpClientSubnetE.send(response)
+            inclinResponse = inclinSim.inclinometerResponse(30.001 + i ** 2)
+            udpClientInclin.send(inclinResponse)
 
             singleResponse = ilcSim.singlePneumaticAxisForce(6, 0, i + i * inc + 6)
-            dualResposne = ilcSim.dualPneumaticAxisForce(6, 0, 6 + i + ((i * inc) ** 2), (i + 6) ** 2 + inc) 
+            dualResponse = ilcSim.dualPneumaticAxisForce(6, 0, 6 + i + ((i * inc) ** 2), (i + 6) ** 2 + inc) 
             udpClientSubnetA.send(singleResponse)
             udpClientSubnetB.send(dualResponse)
             udpClientSubnetC.send(singleResponse)
             udpClientSubnetD.send(dualResponse)
             response = ilcSim.forceAndStatusRequest(6, 0, i*6, i*inc+6)
             udpClientSubnetE.send(response)
+            inclinResponse = inclinSim.inclinometerResponse(30.001 + i ** 2)
+            udpClientInclin.send(inclinResponse)
 
             print(i*6)
             for b in response:
