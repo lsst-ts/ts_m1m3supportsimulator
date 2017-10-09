@@ -61,6 +61,6 @@ class Simulator:
                     crc = crcShift ^ int('A001', 16)
                 else:
                     crc = crcShift
-        aByteArray.extend(crc.to_bytes(2, byteorder='big'))
+        aByteArray.extend(crc.to_bytes(2, byteorder='little'))
         return crc
     

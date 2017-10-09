@@ -21,14 +21,16 @@ class InclinometerSimulator(Simulator):
 
     ###############################################################################
     # inclinometerResponse
-    def inclinometerResponse(self, millidegreesMeasured):
+    def inclinometerResponse(self, degreesMeasured):
         response = bytearray()
         self.dataCheck(self.SERVER_ADDRESS, 'Server Address', response)
         self.dataCheck(self.FUNCTION_CODE, 'Function Code', response)
         self.dataCheck(self.DATA_LENGTH, 'Response Byte Count', response)
 
         # the inclinometer switches the bytes around, such that the MSB is the 3rd one.
-        degreeBytes = self.floatToBytes(millidegreesMeasured, 'Millidegrees Measured', 4)
+        millidegreesMeasured = int(degreesMeasured * 1000)
+        degreeBytes = millidegreesMeasured.to_bytes(4, byteorder='big', signed=False)	
+        #degreeBytes = self.floatToBytes(millidegreesMeasured, 'Millidegrees Measured', 4)
         degreeBytes = [degreeBytes[2], degreeBytes[3], degreeBytes[0], degreeBytes[1]]
         response.extend(degreeBytes)
         
