@@ -32,6 +32,8 @@ class DisplacementSimulator(Simulator):
         
         response = bytearray()
         self.dataCheck(responseString, 'Displacement Response', response, responseLength)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -43,7 +45,7 @@ def main():
     response = displaceSim.displacementResponse(-19.7297, 4.8019, 6.0861, 4.2432, 5.0091, 5.3213)
     ordArray = [c for c in response]
     print(ordArray)
-    assert(bytes([77, 48, 44, 45, 48, 49, 57, 46, 55, 51, 48, 44, 43, 48, 48, 52, 46, 56, 48, 50, 44, 43, 48, 48, 54, 46, 48, 56, 54, 44, 43, 48, 48, 52, 46, 50, 52, 51, 44, 43, 48, 48, 53, 46, 48, 48, 57, 44, 43, 48, 48, 53, 46, 51, 50, 49, 13, 10]) == response)
+    assert(bytes([58, 77, 48, 44, 45, 48, 49, 57, 46, 55, 51, 48, 44, 43, 48, 48, 52, 46, 56, 48, 50, 44, 43, 48, 48, 54, 46, 48, 56, 54, 44, 43, 48, 48, 52, 46, 50, 52, 51, 44, 43, 48, 48, 53, 46, 48, 48, 57, 44, 43, 48, 48, 53, 46, 51, 50, 49, 13, 10]) == response)
     print("Inclinometer Response: " + str(binascii.hexlify(response)))
     
 

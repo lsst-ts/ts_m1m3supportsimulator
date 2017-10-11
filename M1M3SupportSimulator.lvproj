@@ -1,5 +1,6 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <Project Type="Project" LVVersion="16008000">
+	<Property Name="SMProvider.SMVersion" Type="Int">201310</Property>
 	<Item Name="My Computer" Type="My Computer">
 		<Property Name="IOScan.Faults" Type="Str"></Property>
 		<Property Name="IOScan.NetVarPeriod" Type="UInt">100</Property>
@@ -104,11 +105,7 @@ AddOutputFilter chunkFilter
 		<Item Name="UDPCommunication" Type="Folder">
 			<Item Name="GenerateILCResponseEvent.vi" Type="VI" URL="../UDPCommunication/GenerateILCResponseEvent.vi"/>
 			<Item Name="UDP Client.vi" Type="VI" URL="../UDPCommunication/UDP Client.vi"/>
-			<Item Name="UDP Server Subnet A.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet A.vi"/>
-			<Item Name="UDP Server Subnet B.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet B.vi"/>
-			<Item Name="UDP Server Subnet C.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet C.vi"/>
-			<Item Name="UDP Server Subnet D.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet D.vi"/>
-			<Item Name="UDP Server Subnet E.vi" Type="VI" URL="../UDPCommunication/UDP Server Subnet E.vi"/>
+			<Item Name="UDP Server Modbus Subnet.vi" Type="VI" URL="../UDPCommunication/UDP Server Modbus Subnet.vi"/>
 			<Item Name="UDP Server Inclinometer.vi" Type="VI" URL="../UDPCommunication/UDP Server Inclinometer.vi"/>
 			<Item Name="UDP Server Displacement.vi" Type="VI" URL="../UDPCommunication/UDP Server Displacement.vi"/>
 		</Item>
@@ -3865,7 +3862,6 @@ In A Theory of Cognitive Dissonance (1957), Leon Festinger proposed that human b
 		<Item Name="RTTimestamp.lvlib" Type="Library" URL="../Common_RT_Timestamp/RTTimestamp.lvlib"/>
 		<Item Name="RTUtilities.lvlib" Type="Library" URL="../Common_RT_Utilities/RTUtilities.lvlib"/>
 		<Item Name="FPGAInterface.vi" Type="VI" URL="../FPGAInterface.vi"/>
-		<Item Name="TempMain.vi" Type="VI" URL="../TempMain.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
@@ -3901,7 +3897,6 @@ In A Theory of Cognitive Dissonance (1957), Leon Festinger proposed that human b
 				<Item Name="Trim Whitespace.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Trim Whitespace.vi"/>
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 			</Item>
-			<Item Name="M1M3SupportSimulator.lvbitx" Type="Document" URL="../FPGA Bitfiles/M1M3SupportSimulator.lvbitx"/>
 			<Item Name="NiFpgaLv.dll" Type="Document" URL="NiFpgaLv.dll">
 				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
 			</Item>
@@ -3924,7 +3919,7 @@ In A Theory of Cognitive Dissonance (1957), Leon Festinger proposed that human b
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{4BCF8E27-93AB-464E-98C4-FBED0C403A14}</Property>
 				<Property Name="Bld_targetDestDir" Type="Path">/home/lvuser/natinst/bin</Property>
-				<Property Name="Bld_version.build" Type="Int">4</Property>
+				<Property Name="Bld_version.build" Type="Int">5</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">m1m3SupSim.rtexe</Property>
 				<Property Name="Destination[0].path" Type="Path">/home/lvuser/natinst/bin/m1m3SupSim.rtexe</Property>
