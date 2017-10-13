@@ -37,7 +37,7 @@ class ILCSimulator(Simulator):
         self.dataCheck(uniqueId, 'Unique Id', response, 6)
         self.dataCheck(ilcAppType, 'ILC App Type', response)
         self.dataCheck(networkNodeType, 'Network Node Type', response)
-        self.dataCheck(ilcAppType, 'ILC App Type', response)
+        self.dataCheck(ilcSelectedOptions, 'ILC App Type', response)
         self.dataCheck(networkNodeOptions, 'Network Node Options', response)
         self.dataCheck(majorRev, 'Major Revision', response)
         self.dataCheck(minorRev, 'Minor Revision', response)
@@ -260,7 +260,7 @@ class ILCSimulator(Simulator):
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(110, 'Function Code', response)
-        self.dataCheck(24, 'Response Byte Count', response)
+        self.dataCheck(24*4, 'Response Byte Count', response)
         self.dataCheck(mainAdcCalibration1, 'Main ADC Calibration1', response, 4)
         self.dataCheck(mainAdcCalibration2, 'Main ADC Calibration2', response, 4)
         self.dataCheck(mainAdcCalibration3, 'Main ADC Calibration3', response, 4)
@@ -395,7 +395,7 @@ def main():
                                         678.91, 0, 0, 0, 789.21, 891.23, 912.34, -123.45,
                                         -234.56, 0, 0, 0, -345.67, 0, 0, 0)
 #    assert(bytes([1, 110, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 228, 144]) == response)
-    assert(bytes([99, 1, 110, 24, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == response)
+    assert(bytes([99, 1, 110, 24*4, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == response)
     print("Read Calibration Data (110): " + str(binascii.hexlify(response)))
 
     print("Succesfully end testing.")

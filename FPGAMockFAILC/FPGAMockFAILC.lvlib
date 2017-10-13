@@ -7,25 +7,13 @@
 	<Item Name="DataTypes" Type="Folder">
 		<Item Name="MockFABufferUpdateLoopData.ctl" Type="VI" URL="../DataTypes/MockFABufferUpdateLoopData.ctl"/>
 		<Item Name="MockFABufferUpdateStates.ctl" Type="VI" URL="../DataTypes/MockFABufferUpdateStates.ctl"/>
-		<Item Name="MockFAILC1Settings.ctl" Type="VI" URL="../DataTypes/MockFAILC1Settings.ctl"/>
-		<Item Name="MockFAILC2Settings.ctl" Type="VI" URL="../DataTypes/MockFAILC2Settings.ctl"/>
-		<Item Name="MockFAILC3Settings.ctl" Type="VI" URL="../DataTypes/MockFAILC3Settings.ctl"/>
-		<Item Name="MockFAILC4Settings.ctl" Type="VI" URL="../DataTypes/MockFAILC4Settings.ctl"/>
+		<Item Name="MockFAILCSettings.ctl" Type="VI" URL="../DataTypes/MockFAILCSettings.ctl"/>
 		<Item Name="MockFAModbusUpdateLoopData.ctl" Type="VI" URL="../DataTypes/MockFAModbusUpdateLoopData.ctl"/>
 		<Item Name="MockFAModbusUpdateStates.ctl" Type="VI" URL="../DataTypes/MockFAModbusUpdateStates.ctl"/>
 	</Item>
 	<Item Name="Support" Type="Folder">
-		<Item Name="ProcessBufferUpdatesSubnet1.vi" Type="VI" URL="../Support/ProcessBufferUpdatesSubnet1.vi"/>
-		<Item Name="ProcessBufferUpdatesSubnet2.vi" Type="VI" URL="../Support/ProcessBufferUpdatesSubnet2.vi"/>
-		<Item Name="ProcessBufferUpdatesSubnet3.vi" Type="VI" URL="../Support/ProcessBufferUpdatesSubnet3.vi"/>
-		<Item Name="ProcessBufferUpdatesSubnet4.vi" Type="VI" URL="../Support/ProcessBufferUpdatesSubnet4.vi"/>
-		<Item Name="ProcessModbusUpdatesSubnet1.vi" Type="VI" URL="../Support/ProcessModbusUpdatesSubnet1.vi"/>
-		<Item Name="ProcessModbusUpdatesSubnet2.vi" Type="VI" URL="../Support/ProcessModbusUpdatesSubnet2.vi"/>
-		<Item Name="ProcessModbusUpdatesSubnet3.vi" Type="VI" URL="../Support/ProcessModbusUpdatesSubnet3.vi"/>
-		<Item Name="ProcessModbusUpdatesSubnet4.vi" Type="VI" URL="../Support/ProcessModbusUpdatesSubnet4.vi"/>
+		<Item Name="ProcessBufferUpdates.vi" Type="VI" URL="../Support/ProcessBufferUpdates.vi"/>
+		<Item Name="ProcessModbusUpdates.vi" Type="VI" URL="../Support/ProcessModbusUpdates.vi"/>
 	</Item>
-	<Item Name="MockFAILC1.vi" Type="VI" URL="../MockFAILC1.vi"/>
-	<Item Name="MockFAILC2.vi" Type="VI" URL="../MockFAILC2.vi"/>
-	<Item Name="MockFAILC3.vi" Type="VI" URL="../MockFAILC3.vi"/>
-	<Item Name="MockFAILC4.vi" Type="VI" URL="../MockFAILC4.vi"/>
+	<Item Name="MockFAILC.vi" Type="VI" URL="../MockFAILC.vi"/>
 </Library>
