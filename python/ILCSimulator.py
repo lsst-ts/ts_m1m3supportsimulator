@@ -15,6 +15,17 @@ class ILCSimulator(Simulator):
 
     def __init__(self):
         pass
+        
+    ##########################################################################################################
+    # Finalize the response by prepending the overall length (for UDP completeness), address, function, and length (for FPGA)
+    def finalizeResponse(self, address, function, response):
+        length = len(response)
+        response[:0] = bytes([len(response)])
+        response[:0] = bytes([function])
+        response[:0] = bytes([address])
+        response[:0] = bytes([len(response)])
+        return response
+    
 
     ##########################################################################################################
     # Code 17(0x11) Report Server Id
@@ -23,15 +34,11 @@ class ILCSimulator(Simulator):
                        firmwareName):
         response = bytearray()
         
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(17, 'Function Code', response)
-
         firmwareNameBytes = firmwareName.encode('ascii')
         # 12 bytes comes from uniqueId (6 bytes), ilcAppType (1 byte),
         # networkNodeType (1 byte), ilcSelectedOptions (1 byte),
         # networkNodeOptions (1 byte), majorRev (1 byte), minorRev (1 byte)
         byteCount = 12 + len(firmwareNameBytes)
-        self.dataCheck(byteCount + 1, 'Response Byte Count', response)
         self.dataCheck(byteCount, 'Byte Count', response)
 
         self.dataCheck(uniqueId, 'Unique Id', response, 6)
@@ -43,210 +50,153 @@ class ILCSimulator(Simulator):
         self.dataCheck(minorRev, 'Minor Revision', response)
         response.extend(firmwareNameBytes)
                 
-        response[:0] = bytes([len(response)])
-        
-        return response
+        return self.finalizeResponse(serverAddr, 17, response)
 
     ##########################################################################################################
     # Code 18(0x12) Report Server Status
     def reportServerStatus(self, serverAddr, mode, status, faults):
         response = bytearray()
 
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(18, 'Function Code', response)
-        self.dataCheck(5, 'Response Byte Count', response)
         self.dataCheck(mode, 'Mode', response)
         self.dataCheck(status, 'Status', response, 2)
         self.dataCheck(faults, 'Faults', response, 2)
-        
-        response[:0] = bytes([len(response)])
-        
-        return response
+                
+        return self.finalizeResponse(serverAddr, 18, response)
 
     ##########################################################################################################
     # Code 65(0x41) ILC Mode
     def ilcMode(self, serverAddr, ilcMode):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(65, 'Function Code', response)
-        self.dataCheck(2, 'Response Byte Count', response)
-        self.dataCheck(ilcMode, 'ILCMode', response, 2)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        self.dataCheck(ilcMode, 'ILCMode', response, 2)
+ 
+        return self.finalizeResponse(serverAddr, 65, response)
 
     ##########################################################################################################
     # Code 66(0x42) Step Motor Command (unicast)
     def stepMotorCommand(self, serverAddr, statusByte, ssiEncoderValue, loadCellForce):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(66, 'Function Code', response)
-        self.dataCheck(9, 'Response Byte Count', response)
+        
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(ssiEncoderValue, 'SSI Encoder Value', response, 4)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 66, response)
 
     ##########################################################################################################
     # Code 67(0x43) Force(N) and Status Request
     def forceAndStatusRequest(self, serverAddr, statusByte, ssiEncoderValue, loadCellForce):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(67, 'Function Code', response)
-        self.dataCheck(9, 'Response Byte Count', response)
+
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(ssiEncoderValue, 'SSI Encoder Value', response, 4)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
-        
-        response[:0] = bytes([len(response)])
-
-        return response
+   
+        return self.finalizeResponse(serverAddr, 67, response)
 
     ##########################################################################################################
     # Code 72(0x48) Set ILC Temporary Address
     def setIlcTemporaryAddress(self, serverAddr, temporaryAddress):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(72, 'Function Code', response)
-        self.dataCheck(1, 'Response Byte Count', response)
+        
         self.dataCheck(temporaryAddress, 'Temporary Address', response)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 72, response)
 
     ##########################################################################################################
     # Code 73(0x49) Set Boost Valve DCA Gains
     def setBoostValueDcaGains(self, serverAddr):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(73, 'Function Code', response)
         
-        response[:0] = bytes([len(response)])
-        
-        return response
+        return self.finalizeResponse(serverAddr, 73, response)
 
     ##########################################################################################################
     # Code 74(0x4A) Read Boost Valve DCA Gains
     def readBoostValueDcaGains(self, serverAddr, axialBoostValveGain, lateralBoostValveGain):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(74, 'Function Code', response)
+        
         self.dataCheck(axialBoostValveGain, 'Axial Boost Valve Gain', response, 4)
         self.dataCheck(lateralBoostValveGain, 'Lateral Boost Valve Gain', response, 4)
         
-        response[:0] = bytes([len(response)])
-        
-        return response
+        return self.finalizeResponse(serverAddr, 74, response)
 
     ##########################################################################################################
     # Code 75(0x4B) Pneumatic Axis Force Demand Command (Single)
     def singlePneumaticAxisForce(self, statusByte, serverAddr, loadCellForce):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(75, 'Function Code', response)
+        
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 75, response)
 
     ##########################################################################################################
     # Code 75(0x4B) Pneumatic Axis Force Demand Command (Dual)
     def dualPneumaticAxisForce(self, serverAddr, statusByte, axialLoadCellForce, lateralLoadCellForce):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(75, 'Function Code', response)
+        
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
         self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 75, response)
 
     ##########################################################################################################
     # Code 76(0x4C) Pneumatic Force and Status (Single)
     def singlePneumaticForceAndStatus(self, statusByte, serverAddr, loadCellForce):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(76, 'Function Code', response)
+        
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 76, response)
 
     ##########################################################################################################
     # Code 76(0x4C) Pneumatic Force and Status (Dual)
     def dualPneumaticForceAndStatus(self, serverAddr, statusByte, axialLoadCellForce, lateralLoadCellForce):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(76, 'Function Code', response)
+        
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
         self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 76, response)
 
     ##########################################################################################################
     # Code 80(0x50) Set ADC Sample Rate
     def setAdcSampleRate(self, serverAddr, scanRateCode):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(80, 'Function Code', response)
-        self.dataCheck(2, 'Response Byte Count', response)
+        
         self.dataCheck(scanRateCode, 'Scan Rate Code', response, 2)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 80, response)
 
     ##########################################################################################################
     # Code 81(0x51) Set ADC Channel Offset and Sensitivity
     def setAdcChannelOffsetAndSensitivity(self, serverAddr):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(81, 'Function Code', response)
         
-        response[:0] = bytes([len(response)])
-        
-        return response
+        return self.finalizeResponse(serverAddr, 81, response)
 
     ##########################################################################################################
     # Code 82(0x52) Read DAC Values
     def readDacValues(self, serverAddr, dac1ValueAxialPush, dac2ValueAxialPush,
                       dac3ValueLateralPush, dac4ValueLateralPush):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(82, 'Function Code', response)
+        
         self.dataCheck(dac1ValueAxialPush, 'DAC 1 Axial Push', response, 2)
         self.dataCheck(dac2ValueAxialPush, 'DAC 2 Axial Push', response, 2)
         self.dataCheck(dac3ValueLateralPush, 'DAC 3 Lateral Push', response, 2)
         self.dataCheck(dac4ValueLateralPush, 'DAC 4 Lateral Push', response, 2)
-        
-        response[:0] = bytes([len(response)])
 
-        return response
+        return self.finalizeResponse(serverAddr, 82, response)
 
     ##########################################################################################################
     # Code 107(0x6B) Reset
     def reset(self, serverAddr):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(107, 'Function Code', response)
-        
-        response[:0] = bytes([len(response)])
-        
-        return response
+                
+        return self.finalizeResponse(serverAddr, 107, response)
 
     ##########################################################################################################
     # Code 110(0x6E) Read Calibration Data
@@ -258,9 +208,7 @@ class ILCSimulator(Simulator):
                             backupSensorOffset1, backupSensorOffset2, backupSensorOffset3, backupSensorOffset4,
                             backupSensorSensitivity1, backupSensorSensitivity2, backupSensorSensitivity3, backupSensorSensitivity4):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(110, 'Function Code', response)
-        self.dataCheck(24*4, 'Response Byte Count', response)
+        
         self.dataCheck(mainAdcCalibration1, 'Main ADC Calibration1', response, 4)
         self.dataCheck(mainAdcCalibration2, 'Main ADC Calibration2', response, 4)
         self.dataCheck(mainAdcCalibration3, 'Main ADC Calibration3', response, 4)
@@ -286,53 +234,42 @@ class ILCSimulator(Simulator):
         self.dataCheck(backupSensorSensitivity3, 'Backup Sensor Sensitivity3', response, 4)
         self.dataCheck(backupSensorSensitivity4, 'Backup Sensor Sensitivity4', response, 4)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 110, response)
 
     ##########################################################################################################
     # Code 119(0x77) Read DCA Pressure Values
     def readDcaPressureValues(self, serverAddr,
                             pressure1AxialPush, pressure2AxialPull, pressure3LateralPull, pressure4LateralPush):
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(119, 'Function Code', response)
+        
         self.dataCheck(pressure1AxialPush, 'Pressure 1 Axial Push', response, 4)
         self.dataCheck(pressure2AxialPull, 'Pressure 2 Axial Pull', response, 4)
         self.dataCheck(pressure3LateralPull, 'Pressure 3 Lateral Pull', response, 4)
         self.dataCheck(pressure4LateralPush, 'Pressure 4 Lateral Push', response, 4)
         
-        response[:0] = bytes([len(response)])
-        
-        return response
+        return self.finalizeResponse(serverAddr, 119, response)
 
     ##########################################################################################################
     # Code 120(0x78) Report DCA Id
     def reportDcaId(self, serverAddr, dcaUniqueId, firmwareType, firmwareVersion):
 
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(120, 'Function Code', response)
+        
         self.dataCheck(dcaUniqueId, 'DCA Unique ID', response, 6)
         self.dataCheck(firmwareType, 'Firmware Type', response)
         self.dataCheck(firmwareVersion, 'Firmware Version', response, 2)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 120, response)
 
     ##########################################################################################################
     # Code 121(0x79) Report DCA Status
     def reportDcaStatus(self, serverAddr, dcaStatus):
 
         response = bytearray()
-        self.dataCheck(serverAddr, 'Server Address', response)
-        self.dataCheck(121, 'Function Code', response)
+        
         self.dataCheck(dcaStatus, 'DCA Status', response, 2)
         
-        response[:0] = bytes([len(response)])
-
-        return response
+        return self.finalizeResponse(serverAddr, 121, response)
 
 ##########################################################################################################
 # For Testing
