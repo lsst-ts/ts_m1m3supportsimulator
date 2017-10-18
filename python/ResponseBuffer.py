@@ -178,6 +178,7 @@ ipAddress = '140.252.24.124'
 ilcSim = ILCSimulator.ILCSimulator()
 inclinSim = InclinometerSimulator.InclinometerSimulator()
 displaceSim = DisplaceSimulator.DisplacementSimulator()
+accelSim = AccelSimulator.AccelSimulator()
 
 udpClientSubnetA = UDP.UDP(ipAddress, 5006)
 udpClientSubnetB = UDP.UDP(ipAddress, 5007)
@@ -186,6 +187,7 @@ udpClientSubnetD = UDP.UDP(ipAddress, 5009)
 udpClientSubnetE = UDP.UDP(ipAddress, 5005)
 udpClientInclin = UDP.UDP(ipAddress, 5010)
 udpClientDisplace = UDP.UDP(ipAddress, 5011)
+udpClientAccel = UDP.UDP(ipAddress, 5012)
 
 def subnetToUDPClient(subnet):
     if subnet == 1:
@@ -201,6 +203,12 @@ def subnetToUDPClient(subnet):
     raise ValueError()
 
 def main():
+
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, volatage = 1.2))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 2, volatage = 2.2))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 3, volatage = 3.2))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 4, volatage = 4.2))
+    '''
     udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0))
     udpClientInclin.send(inclinSim.inclinometerResponse(degreesMeasured = 98.765))
     
@@ -225,5 +233,6 @@ def main():
         client.send(ilcSim.setAdcSampleRate(serverAddr = row[6], scanRateCode = 8))
         client.send(ilcSim.readCalibrationData(serverAddr = row[6], mainAdcCalibration1 = row[1] + 0.1, mainAdcCalibration2 = row[1] + 0.2, mainAdcCalibration3 = row[1] + 0.3, mainAdcCalibration4 = row[1] + 0.4, mainSensorOffset1 = row[1] + 0.5, mainSensorOffset2 = row[1] + 0.6, mainSensorOffset3 = row[1] + 0.7, mainSensorOffset4 = row[1] + 0.8, mainSensorSensitivity1 = row[1] + 0.9, mainSensorSensitivity2 = row[1] + 1.0, mainSensorSensitivity3 = row[1] + 1.1, mainSensorSensitivity4 = row[1] + 1.2, backupAdcCalibration1 = row[1] + 1.3, backupAdcCalibration2 = row[1] + 1.4, backupAdcCalibration3 = row[1] + 1.5, backupAdcCalibration4 = row[1] + 1.6, backupSensorOffset1 = row[1] + 1.7, backupSensorOffset2 = row[1] + 1.8, backupSensorOffset3 = row[1] + 1.9, backupSensorOffset4 = row[1] + 2.0, backupSensorSensitivity1 = row[1] + 2.1, backupSensorSensitivity2 = row[1] + 2.2, backupSensorSensitivity3 = row[1] + 2.3, backupSensorSensitivity4 = row[1] + 2.4))
         client.send(ilcSim.ilcMode(serverAddr = row[6], ilcMode = 1))
+'''
 
 main()
