@@ -37,11 +37,13 @@ class ILCSimulator(Simulator):
         self.dataCheck(uniqueId, 'Unique Id', response, 6)
         self.dataCheck(ilcAppType, 'ILC App Type', response)
         self.dataCheck(networkNodeType, 'Network Node Type', response)
-        self.dataCheck(ilcAppType, 'ILC App Type', response)
+        self.dataCheck(ilcSelectedOptions, 'ILC App Type', response)
         self.dataCheck(networkNodeOptions, 'Network Node Options', response)
         self.dataCheck(majorRev, 'Major Revision', response)
         self.dataCheck(minorRev, 'Minor Revision', response)
         response.extend(firmwareNameBytes)
+                
+        response[:0] = bytes([len(response)])
         
         return response
 
@@ -57,6 +59,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(status, 'Status', response, 2)
         self.dataCheck(faults, 'Faults', response, 2)
         
+        response[:0] = bytes([len(response)])
+        
         return response
 
     ##########################################################################################################
@@ -67,6 +71,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(65, 'Function Code', response)
         self.dataCheck(2, 'Response Byte Count', response)
         self.dataCheck(ilcMode, 'ILCMode', response, 2)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -80,6 +86,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(ssiEncoderValue, 'SSI Encoder Value', response, 4)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -93,6 +101,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(ssiEncoderValue, 'SSI Encoder Value', response, 4)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -104,6 +114,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(72, 'Function Code', response)
         self.dataCheck(1, 'Response Byte Count', response)
         self.dataCheck(temporaryAddress, 'Temporary Address', response)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -113,6 +125,9 @@ class ILCSimulator(Simulator):
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(73, 'Function Code', response)
+        
+        response[:0] = bytes([len(response)])
+        
         return response
 
     ##########################################################################################################
@@ -123,6 +138,9 @@ class ILCSimulator(Simulator):
         self.dataCheck(74, 'Function Code', response)
         self.dataCheck(axialBoostValveGain, 'Axial Boost Valve Gain', response, 4)
         self.dataCheck(lateralBoostValveGain, 'Lateral Boost Valve Gain', response, 4)
+        
+        response[:0] = bytes([len(response)])
+        
         return response
 
     ##########################################################################################################
@@ -133,6 +151,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(75, 'Function Code', response)
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -145,6 +165,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
         self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -156,6 +178,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(76, 'Function Code', response)
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -168,6 +192,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(statusByte, 'Status Byte', response)
         self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
         self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -179,6 +205,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(80, 'Function Code', response)
         self.dataCheck(2, 'Response Byte Count', response)
         self.dataCheck(scanRateCode, 'Scan Rate Code', response, 2)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -188,6 +216,9 @@ class ILCSimulator(Simulator):
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(81, 'Function Code', response)
+        
+        response[:0] = bytes([len(response)])
+        
         return response
 
     ##########################################################################################################
@@ -201,6 +232,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(dac2ValueAxialPush, 'DAC 2 Axial Push', response, 2)
         self.dataCheck(dac3ValueLateralPush, 'DAC 3 Lateral Push', response, 2)
         self.dataCheck(dac4ValueLateralPush, 'DAC 4 Lateral Push', response, 2)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -210,6 +243,9 @@ class ILCSimulator(Simulator):
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(107, 'Function Code', response)
+        
+        response[:0] = bytes([len(response)])
+        
         return response
 
     ##########################################################################################################
@@ -224,7 +260,7 @@ class ILCSimulator(Simulator):
         response = bytearray()
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(110, 'Function Code', response)
-        self.dataCheck(24, 'Response Byte Count', response)
+        self.dataCheck(24*4, 'Response Byte Count', response)
         self.dataCheck(mainAdcCalibration1, 'Main ADC Calibration1', response, 4)
         self.dataCheck(mainAdcCalibration2, 'Main ADC Calibration2', response, 4)
         self.dataCheck(mainAdcCalibration3, 'Main ADC Calibration3', response, 4)
@@ -249,6 +285,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(backupSensorSensitivity2, 'Backup Sensor Sensitivity2', response, 4)
         self.dataCheck(backupSensorSensitivity3, 'Backup Sensor Sensitivity3', response, 4)
         self.dataCheck(backupSensorSensitivity4, 'Backup Sensor Sensitivity4', response, 4)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -263,6 +301,9 @@ class ILCSimulator(Simulator):
         self.dataCheck(pressure2AxialPull, 'Pressure 2 Axial Pull', response, 4)
         self.dataCheck(pressure3LateralPull, 'Pressure 3 Lateral Pull', response, 4)
         self.dataCheck(pressure4LateralPush, 'Pressure 4 Lateral Push', response, 4)
+        
+        response[:0] = bytes([len(response)])
+        
         return response
 
     ##########################################################################################################
@@ -275,6 +316,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(dcaUniqueId, 'DCA Unique ID', response, 6)
         self.dataCheck(firmwareType, 'Firmware Type', response)
         self.dataCheck(firmwareVersion, 'Firmware Version', response, 2)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -286,6 +329,8 @@ class ILCSimulator(Simulator):
         self.dataCheck(serverAddr, 'Server Address', response)
         self.dataCheck(121, 'Function Code', response)
         self.dataCheck(dcaStatus, 'DCA Status', response, 2)
+        
+        response[:0] = bytes([len(response)])
 
         return response
 
@@ -306,43 +351,43 @@ def main():
     # We no longer use the CRC for the ILC responses
     # and have added a byte count as the 3rd entry.
     # assert (bytes([1, 17, 25, 65, 66, 67, 68, 69, 70, 1, 4, 1, 2, 1, 0, 70, 105, 114, 109, 119, 97, 114, 101, 32, 78, 97, 109, 101, 117, 185]) == response)
-    assert (bytes([1, 17, 26, 25, 65, 66, 67, 68, 69, 70, 1, 4, 1, 2, 1, 0, 70, 105, 114, 109, 119, 97, 114, 101, 32, 78, 97, 109, 101]) == response)
+    assert (bytes([29, 1, 17, 26, 25, 65, 66, 67, 68, 69, 70, 1, 4, 1, 2, 1, 0, 70, 105, 114, 109, 119, 97, 114, 101, 32, 78, 97, 109, 101]) == response)
     print("Report Server Id (17): " + str(binascii.hexlify(response)))
 
     # test Report Server Status (18)
     response = ilcs.reportServerStatus(1, 2, 512, 256)
     # assert(bytes([1, 18, 2, 2, 0, 1, 0, 90, 113]) == response)
-    assert(bytes([1, 18, 5, 2, 2, 0, 1, 0]) == response)
+    assert(bytes([8, 1, 18, 5, 2, 2, 0, 1, 0]) == response)
     print("Report Server Status (18): " + str(binascii.hexlify(response)))
 
     # test ILC Mode (65)
     response = ilcs.ilcMode(1, 2)
     # assert(bytes([1, 65, 0, 2, 13, 208]) == response)
-    assert(bytes([1, 65, 2, 0, 2]) == response)
+    assert(bytes([5, 1, 65, 2, 0, 2]) == response)
     print("ILC Mode(65): " + str(binascii.hexlify(response)))
     
     # test Step Motor Command (66)
     response = ilcs.stepMotorCommand(1, 0, 4096, 3203.46)
     # assert(bytes([1, 66, 0, 0, 0, 16, 0, 69, 72, 55, 92, 133, 32]) == response)
-    assert(bytes([1, 66, 9, 0, 0, 0, 16, 0, 69, 72, 55, 92]) == response)
+    assert(bytes([12, 1, 66, 9, 0, 0, 0, 16, 0, 69, 72, 55, 92]) == response)
     print("Step Motor Command (66): " + str(binascii.hexlify(response)))
     
     # test Force And Status Request (67)
     response = ilcs.forceAndStatusRequest(1, 0, -32, 3.4601)
     #assert(bytes([1, 67, 0, 255, 255, 255, 224, 64, 93, 114, 71, 145, 197]) == response)
-    assert(bytes([1, 67, 9, 0, 255, 255, 255, 224, 64, 93, 114, 71]) == response)
+    assert(bytes([12, 1, 67, 9, 0, 255, 255, 255, 224, 64, 93, 114, 71]) == response)
     print("Force And Status Request (67): " + str(binascii.hexlify(response)))
 
     # test Set ILC Temporary Address (72)
     response = ilcs.setIlcTemporaryAddress(1, 72)
     # assert(bytes([1, 72, 72, 54, 22]) == response)
-    assert(bytes([1, 72, 1, 72]) == response)
+    assert(bytes([4, 1, 72, 1, 72]) == response)
     print("Set ILC Temporary Address (72): " + str(binascii.hexlify(response)))
 
     # test Set ADC Sample Rate (80)
     response = ilcs.setAdcSampleRate(1, 11)
     # assert(bytes([1, 80, 0, 11, 14, 64]) == response)
-    assert(bytes([1, 80, 2, 0, 11]) == response)
+    assert(bytes([5, 1, 80, 2, 0, 11]) == response)
     print("Set ADC Sample Rate (80): " + str(binascii.hexlify(response)))
 
     # test Read Calibration Data (110)
@@ -350,7 +395,7 @@ def main():
                                         678.91, 0, 0, 0, 789.21, 891.23, 912.34, -123.45,
                                         -234.56, 0, 0, 0, -345.67, 0, 0, 0)
 #    assert(bytes([1, 110, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 228, 144]) == response)
-    assert(bytes([1, 110, 24, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == response)
+    assert(bytes([99, 1, 110, 24*4, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == response)
     print("Read Calibration Data (110): " + str(binascii.hexlify(response)))
 
     print("Succesfully end testing.")

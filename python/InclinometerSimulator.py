@@ -35,6 +35,9 @@ class InclinometerSimulator(Simulator):
         response.extend(degreeBytes)
         
         self.calculateCRC(response)
+        
+        response[:0] = bytes([len(response)])
+        
         return response
 
 
@@ -45,7 +48,7 @@ def main():
     inclinSim = InclinometerSimulator()
 
     response = inclinSim.inclinometerResponse(36.001)
-    assert(bytes([127, 3, 4, 1, 6, 66, 16, 165, 180]) == response)
+    assert(bytes([9, 127, 3, 4, 140, 161, 00, 00, 0x1f, 0x46]) == response)
     print("Inclinometer Response: " + str(binascii.hexlify(response)))
     
 
