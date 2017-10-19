@@ -16,12 +16,14 @@ class AccelSimulator(Simulator):
 
     ###############################################################################
     # accelerometerResponse
-    def accelerometerResponse(self, accelerometerNumber, voltage):
+    def accelerometerResponse(self, accelerometerNumber, elevationVoltage, azimuthVoltage):
         response = bytearray()
         if (1 > accelerometerNumber or 4 < accelerometerNumber):
             raise Exception("There are only 4 accelerometers (1-4), you chose number: " + str(accelerometerNumber))
         self.dataCheck(accelerometerNumber, 'Accelrometer Number', response)
-        self.dataCheck(voltage, 'Voltage', response, 4)
+        self.dataCheck(elevationVoltage, 'Elevation Voltage', response, 4)
+        self.dataCheck(azimuthVoltage, 'Azimuth Voltage', response, 4)
+        response[:0] = bytes([len(response)])
         return response
 
 ###############################################################################
