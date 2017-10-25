@@ -146,7 +146,7 @@ class ILCSimulator(Simulator):
     def singlePneumaticForceAndStatus(self, statusByte, serverAddr, loadCellForce):
         response = bytearray()
         
-        self.dataCheck(statusByte, 'Status Byte', response)
+        self.dataCheck(statusByte, 'Status Byte', response, 1, False)
         self.dataCheck(loadCellForce, 'Load Cell Force', response, 4)
         
         return self.finalizeResponse(serverAddr, 76, response)
@@ -156,7 +156,7 @@ class ILCSimulator(Simulator):
     def dualPneumaticForceAndStatus(self, serverAddr, statusByte, axialLoadCellForce, lateralLoadCellForce):
         response = bytearray()
         
-        self.dataCheck(statusByte, 'Status Byte', response)
+        self.dataCheck(statusByte, 'Status Byte', response, 1, False)
         self.dataCheck(axialLoadCellForce, 'Axial Load Cell Force', response, 4)
         self.dataCheck(lateralLoadCellForce, 'Lateral Load Cell Force', response, 4)
         

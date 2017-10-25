@@ -25,10 +25,10 @@ class Simulator:
     # For each type of "someData", store it correctly in aBytesArray
     # parameterName is mainly for error message
     # byteSize is to make sure "someData" has the correct amount of bytes for the parameter
-    def dataCheck(self, someData, parameterName:str, aByteArray:bytearray, byteSize:int=1):
+    def dataCheck(self, someData, parameterName:str, aByteArray:bytearray, byteSize:int=1, intSigned:bool=True):
         # integer
         if (isinstance(someData, int)): 
-            aByteArray.extend(someData.to_bytes(byteSize, byteorder='big', signed=True))
+            aByteArray.extend(someData.to_bytes(byteSize, byteorder='big', signed=intSigned))
             
         # string
         elif (isinstance(someData, str)):
