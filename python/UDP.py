@@ -1,5 +1,6 @@
 import socket
 import sys
+import _thread
 
 ''' 
 UDP
@@ -37,7 +38,7 @@ class UDP:
         else:
             self.sock.sendto(message.encode(), server_address) # need encode in Python 3
 
-    def receive(self):
+    def receive(self, functionCall):
         try:
             self.sock.bind((self.UDP_IP, self.UDP_PORT))
         except socket.error as msg:
@@ -48,6 +49,7 @@ class UDP:
             #TODO find good way to process data outside of this method
             data, addr = self.sock.recvfrom(1024) # buffer size is 1024 bytes
             print ("received message: ", data)
+            _thread.start_new_thread(functionCall, (message))
             break
 #end class UDP
 

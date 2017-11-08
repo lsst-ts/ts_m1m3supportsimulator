@@ -2,8 +2,13 @@
 import ILCSimulator
 import InclinometerSimulator
 import DisplaceSimulator
-import UDP
+import AccelSimulator
+import DigitalInputSimulator
+
+import socket
+import _thread
 import time
+import UDP
 
 forceActuatorTable = [
 [0,101,776.782776,0,-89,'SAA',2,1,'NA',0,3,0,3,],
@@ -179,6 +184,7 @@ ilcSim = ILCSimulator.ILCSimulator()
 inclinSim = InclinometerSimulator.InclinometerSimulator()
 displaceSim = DisplaceSimulator.DisplacementSimulator()
 accelSim = AccelSimulator.AccelSimulator()
+diSim = DigitalInputSimulator.DigitalInputSimulator()
 
 udpClientSubnetA = UDP.UDP(ipAddress, 5006)
 udpClientSubnetB = UDP.UDP(ipAddress, 5007)
@@ -188,6 +194,7 @@ udpClientSubnetE = UDP.UDP(ipAddress, 5005)
 udpClientInclin = UDP.UDP(ipAddress, 5010)
 udpClientDisplace = UDP.UDP(ipAddress, 5011)
 udpClientAccel = UDP.UDP(ipAddress, 5012)
+udpClientDI = UDP.UDP(ipAddress, 5013)
 
 def subnetToUDPClient(subnet):
     if subnet == 1:
@@ -202,13 +209,38 @@ def subnetToUDPClient(subnet):
         return udpClientSubnetE
     raise ValueError()
 
+# This function will just print every UDP message it recieves.
+def digitalSignalServer():
+    # this will not work unless the machine has a resolvable hostname
+    udpDigitalServer = UDP.UDP(socket.gethostbyname(socket.gethostname()), 4999)
+    print("Started UDP Digital Server")
+    #udpDigitalServer.receive()
+
 def main():
 
-    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, volatage = 1.2))
-    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 2, volatage = 2.2))
-    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 3, volatage = 3.2))
-    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 4, volatage = 4.2))
+    try:
+        _thread.start_new_thread(digitalSignalServer, ())
+    except:
+        print(">>>>> WARNING: error starting UDP Server. <<<<<<")
+
+    udpClientDI.send(diSim.powerNetworkShutDown(1))
+    udpClientDI.send(diSim.fansHeatersPumpPoweredOff(1))
+    udpClientDI.send(diSim.laserTrackerOff(1))
+    udpClientDI.send(diSim.airSupplyClosedAirReliefOpen(1))
+    udpClientDI.send(diSim.gisEarthquakeSignal(1))
+    udpClientDI.send(diSim.gisEStop(1))
+    udpClientDI.send(diSim.tmaMotionStop(1))
+    udpClientDI.send(diSim.gisHeartbeatLost(1))
+    udpClientDI.send(diSim.airSupplyValveStatusOpen(1))
+    udpClientDI.send(diSim.airSupplyValveStatusClosed(1))
+    udpClientDI.send(diSim.mirrorCellLightsOn(1))
+    
     '''
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, elevationVoltage = 1.2, azimuthVoltage = 1.2))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 2, elevationVoltage = 2.2, azimuthVoltage = 2.2))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 3, elevationVoltage = 3.2, azimuthVoltage = 3.2))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 4, elevationVoltage = 4.2, azimuthVoltage = 4.2))
+
     udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0))
     udpClientInclin.send(inclinSim.inclinometerResponse(degreesMeasured = 98.765))
     
@@ -234,5 +266,8 @@ def main():
         client.send(ilcSim.readCalibrationData(serverAddr = row[6], mainAdcCalibration1 = row[1] + 0.1, mainAdcCalibration2 = row[1] + 0.2, mainAdcCalibration3 = row[1] + 0.3, mainAdcCalibration4 = row[1] + 0.4, mainSensorOffset1 = row[1] + 0.5, mainSensorOffset2 = row[1] + 0.6, mainSensorOffset3 = row[1] + 0.7, mainSensorOffset4 = row[1] + 0.8, mainSensorSensitivity1 = row[1] + 0.9, mainSensorSensitivity2 = row[1] + 1.0, mainSensorSensitivity3 = row[1] + 1.1, mainSensorSensitivity4 = row[1] + 1.2, backupAdcCalibration1 = row[1] + 1.3, backupAdcCalibration2 = row[1] + 1.4, backupAdcCalibration3 = row[1] + 1.5, backupAdcCalibration4 = row[1] + 1.6, backupSensorOffset1 = row[1] + 1.7, backupSensorOffset2 = row[1] + 1.8, backupSensorOffset3 = row[1] + 1.9, backupSensorOffset4 = row[1] + 2.0, backupSensorSensitivity1 = row[1] + 2.1, backupSensorSensitivity2 = row[1] + 2.2, backupSensorSensitivity3 = row[1] + 2.3, backupSensorSensitivity4 = row[1] + 2.4))
         client.send(ilcSim.ilcMode(serverAddr = row[6], ilcMode = 1))
 '''
+    # go into an infinite loop to wait for messages on UDP server.  Press CTRL-C to stop.
+    while 1:
+        pass
 
 main()
