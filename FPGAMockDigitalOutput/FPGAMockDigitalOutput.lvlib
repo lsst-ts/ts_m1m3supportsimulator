@@ -4,4 +4,14 @@
 	<Property Name="NI.Lib.SourceVersion" Type="Int">369131520</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">false</Property>
+	<Item Name="DataTypes" Type="Folder">
+		<Item Name="MockDigitalOutputSettings.ctl" Type="VI" URL="../DataTypes/MockDigitalOutputSettings.ctl"/>
+	</Item>
+	<Item Name="Support" Type="Folder">
+		<Item Name="CollectDigitalOutput.vi" Type="VI" URL="../Support/CollectDigitalOutput.vi"/>
+		<Item Name="FindChangedOutput.vi" Type="VI" URL="../Support/FindChangedOutput.vi"/>
+		<Item Name="ProcessDigitalOutput.vi" Type="VI" URL="../Support/ProcessDigitalOutput.vi"/>
+		<Item Name="SendAllData.vi" Type="VI" URL="../Support/SendAllData.vi"/>
+	</Item>
+	<Item Name="MockDigitalOutput.vi" Type="VI" URL="../MockDigitalOutput.vi"/>
 </Library>

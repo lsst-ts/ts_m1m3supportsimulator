@@ -46,11 +46,11 @@ class UDP:
             sys.exit()
             
         while True:
-            #TODO find good way to process data outside of this method
             data, addr = self.sock.recvfrom(1024) # buffer size is 1024 bytes
-            print ("received message: ", data)
-            _thread.start_new_thread(functionCall, (message))
-            break
+            #print ("received message: ", data)
+            if (len(data) > 0):
+                _thread.start_new_thread(functionCall, (data.decode(),)) # the comma is there to diambiguate about being a tuple
+            #break
 #end class UDP
 
 # main(): for quick command line testing

@@ -4,6 +4,7 @@ import InclinometerSimulator
 import DisplaceSimulator
 import AccelSimulator
 import DigitalInputSimulator
+import DigitalOutputSimulator
 
 import socket
 import _thread
@@ -185,6 +186,7 @@ inclinSim = InclinometerSimulator.InclinometerSimulator()
 displaceSim = DisplaceSimulator.DisplacementSimulator()
 accelSim = AccelSimulator.AccelSimulator()
 diSim = DigitalInputSimulator.DigitalInputSimulator()
+doSim = DigitalOutputSimulator.DigitalOutputSimulator()
 
 udpClientSubnetA = UDP.UDP(ipAddress, 5006)
 udpClientSubnetB = UDP.UDP(ipAddress, 5007)
@@ -195,6 +197,7 @@ udpClientInclin = UDP.UDP(ipAddress, 5010)
 udpClientDisplace = UDP.UDP(ipAddress, 5011)
 udpClientAccel = UDP.UDP(ipAddress, 5012)
 udpClientDI = UDP.UDP(ipAddress, 5013)
+udpClientDO = UDP.UDP(ipAddress, 5014)
 
 def subnetToUDPClient(subnet):
     if subnet == 1:
@@ -214,7 +217,7 @@ def digitalSignalServer():
     # this will not work unless the machine has a resolvable hostname
     udpDigitalServer = UDP.UDP(socket.gethostbyname(socket.gethostname()), 4999)
     print("Started UDP Digital Server")
-    #udpDigitalServer.receive()
+    udpDigitalServer.receive(doSim.receiveOutput)
 
 def main():
 
@@ -234,6 +237,36 @@ def main():
     udpClientDI.send(diSim.airSupplyValveStatusOpen(1))
     udpClientDI.send(diSim.airSupplyValveStatusClosed(1))
     udpClientDI.send(diSim.mirrorCellLightsOn(1))
+
+    time.sleep(2)
+    
+    udpClientDO.send(doSim.requestHeartBeatSafetyController())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestCriticalFaultSafetyController())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestMirrorLowerRaisingToSafetyController())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestMirrorParkedToSafetyController())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestAirSupplyControlValve())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestMirrorCellLightsRemoteControl())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestAuxPowerNetworkAOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestAuxPowerNetworkBOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestAuxPowerNetworkCOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestAuxPowerNetworkDOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestPowerNetworkAOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestPowerNetworkBOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestPowerNetworkCOn())
+    time.sleep(2)
+    udpClientDO.send(doSim.requestPowerNetworkDOn())
     
     '''
     udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, elevationVoltage = 1.2, azimuthVoltage = 1.2))
