@@ -226,6 +226,7 @@ def main():
     except:
         print(">>>>> WARNING: error starting UDP Server. <<<<<<")
 
+    udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0, displace7 = 7.0, displace8 = 8.0))
     udpClientDI.send(diSim.powerNetworkShutDown(1))
     udpClientDI.send(diSim.fansHeatersPumpPoweredOff(1))
     udpClientDI.send(diSim.laserTrackerOff(1))
