@@ -12,7 +12,7 @@ class DisplacementSimulator(Simulator):
 
     RESPONSE_BEGIN = "M0,"
     RESPONSE_END = "\r\n"
-    DISPLACEMENT_FORMAT = "{num:+08.3f}"
+    DISPLACEMENT_FORMAT = "{num:+09.4f}"
     
     def __init__(self):
         pass
@@ -49,8 +49,8 @@ def main():
     print(ordArray)
     assert(bytes([76, 77, 48, 44, 45, 48, 49, 57, 46, 55, 51, 48, 44, 43, 48, 48, 52, 46, 56, 48, 50, 44, 43, 48, 48, 54, 46, 48, 56, 54, 44, 43, 48, 48, 52, 46, 50, 52, 51, 44, 43, 48, 48, 53, 46, 48, 48, 57, 44, 43, 48, 48, 53, 46, 51, 50, 49, 44, 43, 48, 48, 50, 46, 48, 49, 50, 44, 43, 48, 49, 49, 46, 48, 49, 49, 13, 10]) == response)
     print("Inclinometer Response: " + str(binascii.hexlify(response)))
-    
+    print(response)
 
 ###############################################################################
-#main()
+main()
 
