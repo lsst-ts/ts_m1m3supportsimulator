@@ -270,6 +270,17 @@ class ILCSimulator(Simulator):
         self.dataCheck(dcaStatus, 'DCA Status', response, 2)
         
         return self.finalizeResponse(serverAddr, 121, response)
+        
+    ##########################################################################################################
+    # Code 122(0x7A) Read LVDT
+    def readLVDT(self, serverAddr, lvdt1, lvdt2):
+
+        response = bytearray()
+        
+        self.dataCheck(lvdt1, 'LVDT1', response, 4)
+        self.dataCheck(lvdt2, 'LVDT2', response, 4)
+        
+        return self.finalizeResponse(serverAddr, 122, response)
 
 ##########################################################################################################
 # For Testing
@@ -334,6 +345,12 @@ def main():
 #    assert(bytes([1, 110, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 228, 144]) == response)
     assert(bytes([99, 1, 110, 24*4, 66, 246, 230, 102, 67, 106, 143, 92, 67, 172, 213, 195, 67, 228, 99, 215, 68, 13, 248, 246, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 41, 186, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 69, 77, 113, 68, 94, 206, 184, 68, 100, 21, 195, 194, 246, 230, 102, 195, 106, 143, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 195, 172, 213, 195, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == response)
     print("Read Calibration Data (110): " + str(binascii.hexlify(response)))
+    
+    # test Read LVDT (122)
+    response = ilcs.readLVDT(1, 1.2, 2.3)
+    print("Read LVDT (122): " + str(binascii.hexlify(response)))
+    assert(bytes([11, 1, 122, 8, 0x3F, 0x99, 0x99, 0x9A, 0x40, 0x13, 0x33, 0x33]) == response)
+    
 
     print("Succesfully end testing.")
 ##########################################################################################################

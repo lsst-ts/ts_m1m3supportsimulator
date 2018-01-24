@@ -20,6 +20,22 @@ class DisplacementSimulator(Simulator):
     ###############################################################################
     # displacementResponse
     def displacementResponse(self, displace1, displace2, displace3, displace4, displace5, displace6, displace7, displace8):
+        if displace1 < -999.9999 or displace1 > 999.9999:
+            raise Exception("displace1 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace2 < -999.9999 or displace2 > 999.9999:
+            raise Exception("displace2 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace3 < -999.9999 or displace3 > 999.9999:
+            raise Exception("displace3 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace4 < -999.9999 or displace4 > 999.9999:
+            raise Exception("displace4 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace5 < -999.9999 or displace5 > 999.9999:
+            raise Exception("displace5 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace6 < -999.9999 or displace6 > 999.9999:
+            raise Exception("displace6 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace7 < -999.9999 or displace7 > 999.9999:
+            raise Exception("displace7 is outside the valid range of values [-999.9999, +999.9999]")
+        if displace8 < -999.9999 or displace8 > 999.9999:
+            raise Exception("displace8 is outside the valid range of values [-999.9999, +999.9999]")
 
         displaceArray = [self.DISPLACEMENT_FORMAT.format(num=displace1),
                          self.DISPLACEMENT_FORMAT.format(num=displace2),
@@ -52,5 +68,5 @@ def main():
     print(response)
 
 ###############################################################################
-main()
+#main()
 
