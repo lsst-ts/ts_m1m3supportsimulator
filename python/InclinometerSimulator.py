@@ -22,6 +22,9 @@ class InclinometerSimulator(Simulator):
     ###############################################################################
     # inclinometerResponse
     def inclinometerResponse(self, degreesMeasured):
+        if degreesMeasured < 0.0 or degreesMeasured >= 360.0:
+            raise Exception("degreesMeasured is outside the valid range of values [0.0, 360.0)")
+    
         response = bytearray()
         self.dataCheck(self.SERVER_ADDRESS, 'Server Address', response)
         self.dataCheck(self.FUNCTION_CODE, 'Function Code', response)

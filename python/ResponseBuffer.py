@@ -180,6 +180,15 @@ hardpointActuatorTable = [
 [5,6,3968.01294,0,-89,5,6,0,3],
 ]
 
+hardpointMonitorTable = [
+[0, 11, 5, 84],
+[1, 12, 5, 85],
+[2, 13, 5, 86],
+[3, 14, 5, 87],
+[4, 15, 5, 88],
+[5, 16, 5, 89],
+]
+
 ipAddress = '140.252.24.124'
 
 ilcSim = ILCSimulator.ILCSimulator()
@@ -224,56 +233,92 @@ def digitalSignalServer():
 
 def main():
 
-    try:
-        _thread.start_new_thread(digitalSignalServer, ())
-    except:
-        print(">>>>> WARNING: error starting UDP Server. <<<<<<")
+#    try:
+#        _thread.start_new_thread(digitalSignalServer, ())
+#    except:
+#        print(">>>>> WARNING: error starting UDP Server. <<<<<<")
+#
+#    udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0, displace7 = 7.0, displace8 = 8.0))
+#    udpClientDI.send(diSim.powerNetworkShutDown(1))
+#    udpClientDI.send(diSim.fansHeatersPumpPoweredOff(1))
+#    udpClientDI.send(diSim.laserTrackerOff(1))
+#    udpClientDI.send(diSim.airSupplyClosedAirReliefOpen(1))
+#    udpClientDI.send(diSim.gisEarthquakeSignal(1))
+#    udpClientDI.send(diSim.gisEStop(1))
+#    udpClientDI.send(diSim.tmaMotionStop(1))
+#    udpClientDI.send(diSim.gisHeartbeatLost(1))
+#    udpClientDI.send(diSim.airSupplyValveStatusOpen(1))
+#    udpClientDI.send(diSim.airSupplyValveStatusClosed(1))
+#    udpClientDI.send(diSim.mirrorCellLightsOn(1))
 
     udpClientGyro.send(gyroSim.loadData(12.34, 34.56, 56.78, 1, 14))
         
     '''
     udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0, displace7 = 7.0, displace8 = 8.0))
-    udpClientDI.send(diSim.powerNetworkShutDown(1))
-    udpClientDI.send(diSim.fansHeatersPumpPoweredOff(1))
-    udpClientDI.send(diSim.laserTrackerOff(1))
-    udpClientDI.send(diSim.airSupplyClosedAirReliefOpen(1))
-    udpClientDI.send(diSim.gisEarthquakeSignal(1))
-    udpClientDI.send(diSim.gisEStop(1))
-    udpClientDI.send(diSim.tmaMotionStop(1))
-    udpClientDI.send(diSim.gisHeartbeatLost(1))
-    udpClientDI.send(diSim.airSupplyValveStatusOpen(1))
-    udpClientDI.send(diSim.airSupplyValveStatusClosed(1))
-    udpClientDI.send(diSim.mirrorCellLightsOn(1))
-
-    time.sleep(2)
+    udpClientInclin.send(inclinSim.inclinometerResponse(degreesMeasured = 0.0))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, elevationVoltage = 0.0, azimuthVoltage = 0.0))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 2, elevationVoltage = 0.0, azimuthVoltage = 0.0))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 3, elevationVoltage = 0.0, azimuthVoltage = 0.0))
+    udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 4, elevationVoltage = 0.0, azimuthVoltage = 0.0))
     
-    udpClientDO.send(doSim.requestHeartBeatSafetyController())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestCriticalFaultSafetyController())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestMirrorLowerRaisingToSafetyController())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestMirrorParkedToSafetyController())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestAirSupplyControlValve())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestMirrorCellLightsRemoteControl())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestAuxPowerNetworkAOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestAuxPowerNetworkBOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestAuxPowerNetworkCOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestAuxPowerNetworkDOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestPowerNetworkAOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestPowerNetworkBOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestPowerNetworkCOn())
-    time.sleep(2)
-    udpClientDO.send(doSim.requestPowerNetworkDOn())
+    for row in hardpointActuatorTable:
+        index = row[0]
+        id = row[1]
+        xPosition = row[2]
+        yPosition = row[3]
+        zPosition = row[4]
+        subnet = subnetToUDPClient(row[5])
+        address = row[6]
+        subnet.send(ilcSim.reportServerId(serverAddr = address, uniqueId = id, ilcAppType = 2, networkNodeType = 2, ilcSelectedOptions = 0, networkNodeOptions = 0, majorRev = 8, minorRev = 0, firmwareName = "Mock-HP"))
+        subnet.send(ilcSim.reportServerStatus(serverAddr = address, mode = 48, status = 0, faults = 0))
+        subnet.send(ilcSim.ilcMode(serverAddr = address, ilcMode = 0))
+        subnet.send(ilcSim.forceAndStatusRequest(serverAddr = address, statusByte = 0, ssiEncoderValue = (1000 + id), loadCellForce = (id + 0.5)))
+       
+    for row in hardpointMonitorTable:
+        index = row[0]
+        id = row[1]
+        subnet = subnetToUDPClient(row[2])
+        address = row[3]
+        subnet.send(ilcSim.reportServerId(serverAddr = address, uniqueId = id, ilcAppType = 3, networkNodeType = 3, ilcSelectedOptions = 0, networkNodeOptions = 0, majorRev = 8, minorRev = 0, firmwareName = "Mock-HM"))
+        subnet.send(ilcSim.reportServerStatus(serverAddr = address, mode = 50, status = 0, faults = 0))
+        subnet.send(ilcSim.ilcMode(serverAddr = address, ilcMode = 0))
+        subnet.send(ilcSim.readDcaPressureValues(serverAddr = address, pressure1AxialPush = (index + 0.1), pressure2AxialPull = (index + 0.2), pressure3LateralPull = (index + 0.3), pressure4LateralPush = (index + 0.4)))
+#        subnet.send(ilcSim.reportDcaId(serverAddr = address, dcaUniqueId = id, firmwareType = 52, firmwareVersion = 0x0800))
+        subnet.send(ilcSim.reportDcaStatus(serverAddr = address, dcaStatus = 4))
+        subnet.send(ilcSim.readLVDT(serverAddr = address, lvdt1 = -(index + 0.1), lvdt2 = (index + 0.2)))
+#        
+#    subnetToUDPClient(2).send(ilcSim.singlePneumaticForceAndStatus(serverAddr = 1, statusByte = 0, loadCellForce = 10.0))
+#    subnetToUDPClient(5).send(ilcSim.forceAndStatusRequest(serverAddr = 1, statusByte = 0, ssiEncoderValue = 20, loadCellForce = 10.0))
+        
+#    time.sleep(2)
+#    
+#    udpClientDO.send(doSim.requestHeartBeatSafetyController())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestCriticalFaultSafetyController())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestMirrorLowerRaisingToSafetyController())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestMirrorParkedToSafetyController())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestAirSupplyControlValve())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestMirrorCellLightsRemoteControl())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestAuxPowerNetworkAOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestAuxPowerNetworkBOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestAuxPowerNetworkCOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestAuxPowerNetworkDOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestPowerNetworkAOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestPowerNetworkBOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestPowerNetworkCOn())
+#    time.sleep(2)
+#    udpClientDO.send(doSim.requestPowerNetworkDOn())
     
     udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, elevationVoltage = 1.2, azimuthVoltage = 1.2))
     udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 2, elevationVoltage = 2.2, azimuthVoltage = 2.2))
@@ -306,7 +351,7 @@ def main():
         client.send(ilcSim.ilcMode(serverAddr = row[6], ilcMode = 1))
 '''
     # go into an infinite loop to wait for messages on UDP server.  Press CTRL-C to stop.
-    while 1:
-        pass
+#    while 1:
+#        pass
 
 main()
