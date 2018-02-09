@@ -5,6 +5,7 @@ import DisplaceSimulator
 import AccelSimulator
 import DigitalInputSimulator
 import DigitalOutputSimulator
+import GyroSimulator
 
 import socket
 import _thread
@@ -187,6 +188,7 @@ displaceSim = DisplaceSimulator.DisplacementSimulator()
 accelSim = AccelSimulator.AccelSimulator()
 diSim = DigitalInputSimulator.DigitalInputSimulator()
 doSim = DigitalOutputSimulator.DigitalOutputSimulator()
+gyroSim = GyroSimulator.GyroSimulator()
 
 udpClientSubnetA = UDP.UDP(ipAddress, 5006)
 udpClientSubnetB = UDP.UDP(ipAddress, 5007)
@@ -198,6 +200,7 @@ udpClientDisplace = UDP.UDP(ipAddress, 5011)
 udpClientAccel = UDP.UDP(ipAddress, 5012)
 udpClientDI = UDP.UDP(ipAddress, 5013)
 udpClientDO = UDP.UDP(ipAddress, 5014)
+udpClientGyro = UDP.UDP(ipAddress, 5015)
 
 def subnetToUDPClient(subnet):
     if subnet == 1:
@@ -226,6 +229,9 @@ def main():
     except:
         print(">>>>> WARNING: error starting UDP Server. <<<<<<")
 
+    udpClientGyro.send(gyroSim.loadData(12.34, 34.56, 56.78, 1, 14))
+        
+    '''
     udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0, displace7 = 7.0, displace8 = 8.0))
     udpClientDI.send(diSim.powerNetworkShutDown(1))
     udpClientDI.send(diSim.fansHeatersPumpPoweredOff(1))
@@ -269,7 +275,6 @@ def main():
     time.sleep(2)
     udpClientDO.send(doSim.requestPowerNetworkDOn())
     
-    '''
     udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 1, elevationVoltage = 1.2, azimuthVoltage = 1.2))
     udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 2, elevationVoltage = 2.2, azimuthVoltage = 2.2))
     udpClientAccel.send(accelSim.accelerometerResponse(accelerometerNumber = 3, elevationVoltage = 3.2, azimuthVoltage = 3.2))
