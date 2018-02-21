@@ -189,7 +189,7 @@ hardpointMonitorTable = [
 [5, 16, 5, 89],
 ]
 
-ipAddress = '140.252.24.124'
+ipAddress = '140.252.32.153'
 
 ilcSim = ILCSimulator.ILCSimulator()
 inclinSim = InclinometerSimulator.InclinometerSimulator()
@@ -251,7 +251,7 @@ def main():
 #    udpClientDI.send(diSim.airSupplyValveStatusClosed(1))
 #    udpClientDI.send(diSim.mirrorCellLightsOn(1))
 
-    udpClientGyro.send(gyroSim.loadData(12.34, 34.56, 56.78, 1, 14))
+    udpClientGyro.send(gyroSim.loadData(12.34, 34.56, 56.78, True, 14))
         
     '''
     udpClientDisplace.send(displaceSim.displacementResponse(displace1 = 1.0, displace2 = 2.0, displace3 = 3.0, displace4 = 4.0, displace5 = 5.0, displace6 = 6.0, displace7 = 7.0, displace8 = 8.0))

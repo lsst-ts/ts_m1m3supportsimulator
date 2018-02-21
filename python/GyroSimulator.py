@@ -20,8 +20,8 @@ class GyroSimulator(Simulator):
         self.dataCheck(yValue, 'Y Value', response, 4)
         self.dataCheck(zValue, 'Z Value', response, 4)
         if isValid:
-            # binary 11100000 - all valid, DSP 1760 manual, pg. 15 & Rev. B DSP 1760 External Electrical Signaling ICD pg.19
-            self.dataCheck(238, 'Is Valid', response, 1, False) 
+            # binary 00000111 - all valid, DSP 1760 manual, pg. 15 & Rev. B DSP 1760 External Electrical Signaling ICD pg.19
+            self.dataCheck(7, 'Is Valid', response, 1, False) 
         else:
             self.dataCheck(0, 'Is Valid', response, 1, False) # binary 00000000 - all invalid, DSP 1760 manual, pg.15
         self.dataCheck(gyroTemperature, 'Gyro Temperature', response, 2)

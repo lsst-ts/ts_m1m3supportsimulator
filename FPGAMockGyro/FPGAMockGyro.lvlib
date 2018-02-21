@@ -17,7 +17,6 @@
 		<Item Name="ConvertDataRateToTicks.vi" Type="VI" URL="../Support/ConvertDataRateToTicks.vi"/>
 		<Item Name="ConvertToWriteByte.vi" Type="VI" URL="../Support/ConvertToWriteByte.vi"/>
 		<Item Name="CRC32.vi" Type="VI" URL="../Support/CRC32.vi"/>
-		<Item Name="CreateGyroOutput.vi" Type="VI" URL="../Support/CreateGyroOutput.vi"/>
 		<Item Name="GyroCounterIncrementor.vi" Type="VI" URL="../Support/GyroCounterIncrementor.vi"/>
 		<Item Name="GyroDataStreamOut.vi" Type="VI" URL="../Support/GyroDataStreamOut.vi"/>
 		<Item Name="ProcessBufferUpdates.vi" Type="VI" URL="../Support/ProcessBufferUpdates.vi"/>
