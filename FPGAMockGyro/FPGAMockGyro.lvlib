@@ -4,6 +4,7 @@
 	<Property Name="NI.Lib.SourceVersion" Type="Int">369131520</Property>
 	<Property Name="NI.Lib.Version" Type="Str">1.0.0.0</Property>
 	<Property Name="NI.LV.All.SourceOnly" Type="Bool">false</Property>
+	<Property Name="NI.SortType" Type="Int">3</Property>
 	<Item Name="DataTypes" Type="Folder">
 		<Item Name="MockGyroBufferUpdateData.ctl" Type="VI" URL="../DataTypes/MockGyroBufferUpdateData.ctl"/>
 		<Item Name="MockGyroBufferUpdateStates.ctl" Type="VI" URL="../DataTypes/MockGyroBufferUpdateStates.ctl"/>
