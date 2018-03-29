@@ -13,6 +13,8 @@
 		<Item Name="MockGyroModes.ctl" Type="VI" URL="../DataTypes/MockGyroModes.ctl"/>
 		<Item Name="MockGyroState.ctl" Type="VI" URL="../DataTypes/MockGyroState.ctl"/>
 		<Item Name="MockGyroStateTypes.ctl" Type="VI" URL="../DataTypes/MockGyroStateTypes.ctl"/>
+		<Item Name="GyroStates.ctl" Type="VI" URL="../DataTypes/GyroStates.ctl"/>
+		<Item Name="GyroData.ctl" Type="VI" URL="../DataTypes/GyroData.ctl"/>
 	</Item>
 	<Item Name="Support" Type="Folder">
 		<Item Name="ConvertDataRateToTicks.vi" Type="VI" URL="../Support/ConvertDataRateToTicks.vi"/>
@@ -25,4 +27,5 @@
 		<Item Name="TranslateModbusInput.vi" Type="VI" URL="../Support/TranslateModbusInput.vi"/>
 	</Item>
 	<Item Name="MockGyro.vi" Type="VI" URL="../MockGyro.vi"/>
+	<Item Name="Gyro.vi" Type="VI" URL="../Gyro.vi"/>
 </Library>
