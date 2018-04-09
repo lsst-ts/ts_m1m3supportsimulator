@@ -122,7 +122,7 @@ class ILCSimulator(Simulator):
 
     ##########################################################################################################
     # Code 75(0x4B) Pneumatic Axis Force Demand Command (Single)
-    def singlePneumaticAxisForce(self, statusByte, serverAddr, loadCellForce):
+    def singlePneumaticAxisForce(self, serverAddr, statusByte, loadCellForce):
         response = bytearray()
         
         self.dataCheck(statusByte, 'Status Byte', response)
@@ -143,7 +143,7 @@ class ILCSimulator(Simulator):
 
     ##########################################################################################################
     # Code 76(0x4C) Pneumatic Force and Status (Single)
-    def singlePneumaticForceAndStatus(self, statusByte, serverAddr, loadCellForce):
+    def singlePneumaticForceAndStatus(self, serverAddr, statusByte, loadCellForce):
         response = bytearray()
         
         self.dataCheck(statusByte, 'Status Byte', response, 1, False)
