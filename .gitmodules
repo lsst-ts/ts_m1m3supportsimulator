@@ -1,24 +1,24 @@
 [submodule "Common_FPGA_FIFO"]
 	path = Common_FPGA_FIFO
-	url = https://stash.lsstcorp.org/scm/ts/common_fpga_fifo.git
+	url = https://github.com/lsst-ts/common_fpga_fifo.git
 [submodule "Common_FPGA_HealthAndStatus"]
 	path = Common_FPGA_HealthAndStatus
-	url = https://stash.lsstcorp.org/scm/ts/common_fpga_healthandstatus.git
+	url = https://github.com/lsst-ts/common_fpga_healthandstatus.git
 [submodule "Common_FPGA_Timestamp"]
 	path = Common_FPGA_Timestamp
-	url = https://stash.lsstcorp.org/scm/ts/common_fpga_timestamp.git
+	url = https://github.com/lsst-ts/common_fpga_timestamp.git
 [submodule "Common_FPGA_Modbus"]
 	path = Common_FPGA_Modbus
-	url = https://stash.lsstcorp.org/scm/ts/common_fpga_modbus.git
+	url = https://github.com/lsst-ts/common_fpga_modbus.git
 [submodule "Common_RT_FPGA"]
 	path = Common_RT_FPGA
-	url = https://stash.lsstcorp.org/scm/ts/common_rt_fpga.git
+	url = https://github.com/lsst-ts/common_rt_fpga.git
 [submodule "Common_RT_HealthAndStatus"]
 	path = Common_RT_HealthAndStatus
-	url = https://stash.lsstcorp.org/scm/ts/common_rt_healthandstatus.git
+	url = https://github.com/lsst-ts/common_rt_healthandstatus.git
 [submodule "Common_RT_Timestamp"]
 	path = Common_RT_Timestamp
-	url = https://stash.lsstcorp.org/scm/ts/common_rt_timestamp.git
+	url = https://github.com/lsst-ts/common_rt_timestamp.git
 [submodule "Common_RT_Utilities"]
 	path = Common_RT_Utilities
-	url = https://stash.lsstcorp.org/scm/ts/common_rt_utilities.git
+	url = https://github.com/lsst-ts/common_rt_utilities.git
