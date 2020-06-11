@@ -11,6 +11,7 @@
 [submodule "Common_FPGA_Modbus"]
 	path = Common_FPGA_Modbus
 	url = https://github.com/lsst-ts/common_fpga_modbus.git
+	branch = master
 [submodule "Common_RT_FPGA"]
 	path = Common_RT_FPGA
 	url = https://github.com/lsst-ts/common_rt_fpga.git
