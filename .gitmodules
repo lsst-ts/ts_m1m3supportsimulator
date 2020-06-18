@@ -4,12 +4,14 @@
 [submodule "Common_FPGA_HealthAndStatus"]
 	path = Common_FPGA_HealthAndStatus
 	url = https://github.com/lsst-ts/common_fpga_healthandstatus.git
+	branch = master
 [submodule "Common_FPGA_Timestamp"]
 	path = Common_FPGA_Timestamp
 	url = https://github.com/lsst-ts/common_fpga_timestamp.git
 [submodule "Common_FPGA_Modbus"]
 	path = Common_FPGA_Modbus
 	url = https://github.com/lsst-ts/common_fpga_modbus.git
+	branch = master
 [submodule "Common_RT_FPGA"]
 	path = Common_RT_FPGA
 	url = https://github.com/lsst-ts/common_rt_fpga.git

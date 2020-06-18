@@ -1,6 +1,6 @@
-[My Computer]
-My Computer = "140.252.32.171"
+[M1M3-simulator]
+M1M3-simulator = "10.0.0.12"
 
-[RT CompactRIO Target]
-RT CompactRIO Target = "140.252.24.124"
+[My Computer]
+My Computer = "10.0.0.10"
 
